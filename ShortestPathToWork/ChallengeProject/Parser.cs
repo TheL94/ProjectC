@@ -18,11 +18,7 @@ namespace ChallengeProject
             {
                 if(i == 0)
                 {
-                    data.Services = new string[Int32.Parse(_arraysToParse[i][1])]; // n servizi
-                    data.Countries = new string[Int32.Parse(_arraysToParse[i][2])]; // n nazioni
-
-                    data.Providers = new Provider[Int32.Parse(_arraysToParse[i][0])]; // n providers
-                    data.Projects = new Project[Int32.Parse(_arraysToParse[i][3])]; // n progetti
+                    ParseTotalNumbers(data, _arraysToParse[i]);
                     i++;
                     continue;
                 }
@@ -44,45 +40,10 @@ namespace ChallengeProject
                     i++;
                     continue;
                 }
-                else if(i > 2 && i < sumOfProversRegions)
+                else if(i < sumOfProversRegions)
                 {
-                    data.Providers[currentProviderIndex] = new Provider();
-                    data.Providers[currentProviderIndex].Name =_arraysToParse[i][0]; // prover name
-
-                    int regionCount = Int32.Parse(_arraysToParse[i][1]); // numero di regioni
-
-                    data.Providers[currentProviderIndex].regions = new Region[regionCount];
-
-                    sumOfProversRegions += regionCount;
-
-                    // new region
-                    for (int j = 0; j < regionCount; j++)
-                    {
-                        data.Providers[currentProviderIndex].regions[j].name = _arraysToParse[i + 1][0];
-
-                        data.Providers[currentProviderIndex].regions[j].UnitAvailable = Int32.Parse(_arraysToParse[i + 2][0]);
-                        data.Providers[currentProviderIndex].regions[j].CostPerUnit = float.Parse(_arraysToParse[i + 2][1]);
-
-                        // new unit
-                        data.Providers[currentProviderIndex].regions[j].Units = new Unit();
-                        for (int k = 2; k < data.Services.Length; k++)
-                        {
-                            data.Providers[currentProviderIndex].regions[j].Units.Services[k - 2].Service = data.Services[k - 2];
-                            data.Providers[currentProviderIndex].regions[j].Units.Services[k - 2].Quantity = Int32.Parse(_arraysToParse[i + 2][k]);
-                        }
-
-                        // new latency
-                        data.Providers[currentProviderIndex].regions[j].RegionLatency = new Latency[data.Countries.Length];
-                        for (int k = 0; k < data.Countries.Length; k++)
-                        {
-                            data.Providers[currentProviderIndex].regions[j].RegionLatency[k].Country = data.Countries[k];
-                            data.Providers[currentProviderIndex].regions[j].RegionLatency[k].LatencyValue = Int32.Parse(_arraysToParse[i + 3][k]);
-                        }
-                    }
-
-                    currentProviderIndex++;
-
-                    i += regionCount * 3;
+                    ParseProviders(data, _arraysToParse, i, currentProviderIndex);
+                    
                     continue;
                 }
                 else
@@ -92,6 +53,57 @@ namespace ChallengeProject
             }
 
             return data;
+        }
+
+        static void ParseTotalNumbers(ParsedData _data, string[] _line)
+        {
+            _data.Services = new string[Int32.Parse(_line[1])]; // n servizi
+            _data.Countries = new string[Int32.Parse(_line[2])]; // n nazioni
+
+            _data.Providers = new Provider[Int32.Parse(_line[0])]; // n providers
+            _data.Projects = new Project[Int32.Parse(_line[3])]; // n progetti
+        }
+
+        static void ParseProviders(ParsedData _data, string[][] _arraysToParse, int _i, int _currentProviderIndex)
+        {
+            _data.Providers[_currentProviderIndex] = new Provider();
+            _data.Providers[_currentProviderIndex].Name = _arraysToParse[_i][0]; // prover name
+
+            int regionCount = Int32.Parse(_arraysToParse[_i][1]); // numero di regioni
+
+            _data.Providers[_currentProviderIndex].regions = new Region[regionCount];
+
+            // new region
+            for (int i = 0; i < regionCount; i++)
+            {
+                ParseRegion(_data, _data.Providers[_currentProviderIndex].regions[i], _arraysToParse, (_i + 1) +  (3 * i));
+            }
+
+            _currentProviderIndex++;
+        }
+
+        static void ParseRegion(ParsedData _data, Region _region, string[][] _arraysToParse, int _startLine)
+        {
+            _region.name = _arraysToParse[_startLine][0]; // s
+
+            _region.UnitAvailable = Int32.Parse(_arraysToParse[_startLine + 1][0]);
+            _region.CostPerUnit = float.Parse(_arraysToParse[_startLine + 1][1]);
+
+            // new unit
+            _region.Units = new Unit();
+            for (int i = 2; i < _data.Services.Length; i++)
+            {
+                _region.Units.Services[i - 2].Service = _data.Services[i - 1];
+                _region.Units.Services[i - 2].Quantity = Int32.Parse(_arraysToParse[_startLine + 1][i]);
+            }
+
+            // new latency
+            _region.RegionLatency = new Latency[_data.Countries.Length];
+            for (int i = 0; i < _data.Countries.Length; i++)
+            {
+                _region.RegionLatency[i].Country = _data.Countries[i];
+                _region.RegionLatency[i].LatencyValue = Int32.Parse(_arraysToParse[_startLine + 2][i]);
+            }
         }
 
         public static string[][] ParseOutputData()
