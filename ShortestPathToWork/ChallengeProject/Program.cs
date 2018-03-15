@@ -20,12 +20,18 @@ namespace ChallengeProject
             string[][] inputText = FileManager.Read(path, ' ');
 
             ParsedData data = Parser.ParseInputputData(inputText);
+            OrderProjectsByPenalty(data);
 
             Console.WriteLine("Press ESC to terminate.");
 
             ConsoleKeyInfo pressedKey = Console.ReadKey();
             if (pressedKey.Key == ConsoleKey.Escape)
                 return;
+        }
+
+        static void OrderProjectsByPenalty(ParsedData _data)
+        {
+            _data.ProjectsOrderByPenaltyDescending = _data.ProjectsOrderByInput.OrderByDescending(p => p.PenaltyValue).ToArray();
         }
     }
 }

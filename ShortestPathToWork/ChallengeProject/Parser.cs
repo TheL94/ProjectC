@@ -32,10 +32,10 @@ namespace ChallengeProject
             }
 
             int parsedLine = currentProviderLine;
-            for (int i = 0; i < data.Projects.Length; i++)
+            for (int i = 0; i < data.ProjectsOrderByInput.Length; i++)
             {
-                data.Projects[i] = new Project();
-                ParseProjects(data, data.Projects[i], _arraysToParse[parsedLine]);
+                data.ProjectsOrderByInput[i] = new Project();
+                ParseProjects(data, data.ProjectsOrderByInput[i], _arraysToParse[parsedLine]);
                 parsedLine++;
             }
 
@@ -48,7 +48,7 @@ namespace ChallengeProject
             _data.Countries = new string[Int32.Parse(_lineToParse[2])]; // n nazioni
 
             _data.Providers = new Provider[Int32.Parse(_lineToParse[0])]; // n providers
-            _data.Projects = new Project[Int32.Parse(_lineToParse[3])]; // n progetti
+            _data.ProjectsOrderByInput = new Project[Int32.Parse(_lineToParse[3])]; // n progetti
         }
 
         static int ParseProviders(ParsedData _data, string[][] _arraysToParse, int _currentProviderLine, int _currentProviderIndex)
@@ -126,6 +126,7 @@ namespace ChallengeProject
         public string[] Countries;
 
         public Provider[] Providers;
-        public Project[] Projects;
+        public Project[] ProjectsOrderByInput;
+        public Project[] ProjectsOrderByPenaltyDescending;
     }
 }
