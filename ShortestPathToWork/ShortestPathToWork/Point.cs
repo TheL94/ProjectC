@@ -14,6 +14,11 @@ namespace ShortestPathToWork
 
         public Point() { }
 
+        public Point(Polygonal _polygonalOfAppartenence)
+        {
+            PolygonalOfAppartenence = _polygonalOfAppartenence;
+        }
+
         public Point(int _x, int _y)
         {
             X = _x;

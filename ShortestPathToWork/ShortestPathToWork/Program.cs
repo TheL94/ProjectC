@@ -12,9 +12,9 @@ namespace ShortestPathToWork
         {
             string path = InitApplication(Environment.SpecialFolder.Desktop);
 
-            // passare il parh alla classe di lettura
             string[][] inputText = Reader.Read(path, ' ');
 
+            // passare il parh alla classe di lettura
             InputParsed dataForPathfinder = Parser.ParseInputData(inputText);
 
             // prendere il ritorno del reader e passarlo al parser
