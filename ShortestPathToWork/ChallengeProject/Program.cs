@@ -12,15 +12,15 @@ namespace ChallengeProject
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Insert File Name With Format :"); 
+            Console.WriteLine("Challenge - Insert File Name With Format :"); 
 
             string fileName = Console.ReadLine();
             string path = EnvironmentPath + "\\" + fileName; ;
 
             string[][] inputText = FileManager.Read(path, ' ');
 
+            ParsedData data = Parser.ParseInputputData(inputText);
 
-            Console.WriteLine("Data Writed in output.txt");
             Console.WriteLine("Press ESC to terminate.");
 
             ConsoleKeyInfo pressedKey = Console.ReadKey();

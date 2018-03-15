@@ -8,7 +8,7 @@ namespace ChallengeProject
 {
     public class Region
     {
-        public string name;
+        public string Name;
         public int UnitAvailable;
         public float CostPerUnit;
         public Unit Units;

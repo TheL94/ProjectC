@@ -10,6 +10,6 @@ namespace ChallengeProject
     {
         public int PenaltyValue;
         public string Country;
-        public List<ServicePerUnit> NeededServices = new List<ServicePerUnit>();
+        public ServicePerUnit[] NeededServices;
     }
 }
