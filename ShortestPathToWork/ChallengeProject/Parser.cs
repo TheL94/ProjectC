@@ -65,6 +65,7 @@ namespace ChallengeProject
             {
                 _data.Providers[_currentProviderIndex].regions[i] = new Region();
                 ParseRegion(_data, _data.Providers[_currentProviderIndex].regions[i], _arraysToParse, (_currentProviderLine + 1) +  (3 * i));
+                _data.Regions.Add(_data.Providers[_currentProviderIndex].regions[i]);
             }
 
             _currentProviderIndex++;
@@ -114,9 +115,40 @@ namespace ChallengeProject
             }
         }
 
-        public static string[][] ParseOutputData()
+        public static string[] ParseOutputData(ParsedData _parsedData, List<EvaluatedData> _evaluatedData)
         {
-            return null;
+            string[] newProjectLine = new string[_evaluatedData.Count * 3];
+
+            for (int i = 0; i < newProjectLine.Length; i += 3)
+            {
+                newProjectLine[i] = ReturnProviderIndexByName(_parsedData, _evaluatedData[i].ProviderName).ToString();
+                newProjectLine[i + 1] = ReturnRegionIndexByName(_parsedData, _evaluatedData[i].RegionName).ToString();
+                newProjectLine[i + 2] = _evaluatedData[i].Units.ToString();
+            }
+
+            return newProjectLine;
+        }
+
+        static int ReturnProviderIndexByName(ParsedData _parsed, string _name)
+        {
+            for (int i = 0; i < _parsed.Providers.Length; i++)
+            {
+                if (_parsed.Providers[i].Name == _name)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        static int ReturnRegionIndexByName(ParsedData _parsedData, string _name)
+        {
+            for (int i = 0; i < _parsedData.Regions.Count; i++)
+            {
+                if (_parsedData.Regions[i].Name == _name)
+                    return i;
+            }
+
+            return -1;
         }
     }
 
@@ -125,6 +157,7 @@ namespace ChallengeProject
         public string[] Services;
         public string[] Countries;
 
+        public List<Region> Regions = new List<Region>();
         public Provider[] Providers;
         public Project[] ProjectsOrderByInput;
         public Project[] ProjectsOrderByPenaltyDescending;
