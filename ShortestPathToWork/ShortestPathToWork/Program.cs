@@ -21,10 +21,12 @@ namespace ShortestPathToWork
 
             InputParsed dataForPathfinder = Parser.ParseInputData(inputText);
 
-            string[][] outputData = Parser.ParseOutputData();
+            //string[][] outputData = Parser.ParseOutputData();
+            string[][] outputData = inputText;
 
             FileManager.Write(outputData, EnvironmentPath + "\\" + "output.txt", ' ');
 
+            Console.WriteLine("Data Writed in output.txt");
             Console.WriteLine("Press ESC to terminate.");
 
             ConsoleKeyInfo pressedKey = Console.ReadKey();
