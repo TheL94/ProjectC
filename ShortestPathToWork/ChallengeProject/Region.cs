@@ -12,12 +12,12 @@ namespace ChallengeProject
         public int UnitAvailable;
         public float CostPerUnit;
         public Unit Units;
-        public List<Latency> RegionLatency = new List<Latency>();
+        public Latency[] RegionLatency;
     }
 
     public class Unit
     {
-        public List<ServicePerUnit> Services;
+        public ServicePerUnit[] Services;
     }
 
     public class ServicePerUnit

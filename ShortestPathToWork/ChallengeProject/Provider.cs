@@ -8,6 +8,7 @@ namespace ChallengeProject
 {
     public class Provider
     {
-        public List<Region> regions = new List<Region>();
+        public string Name;
+        public Region[] regions;
     }
 }

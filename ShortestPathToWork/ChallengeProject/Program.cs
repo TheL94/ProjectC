@@ -12,7 +12,7 @@ namespace ChallengeProject
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Insert File Name With Format :");
+            Console.WriteLine("Insert File Name With Format :"); 
 
             string fileName = Console.ReadLine();
             string path = EnvironmentPath + "\\" + fileName; ;
