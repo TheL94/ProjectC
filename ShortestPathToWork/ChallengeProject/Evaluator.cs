@@ -23,6 +23,7 @@ namespace ChallengeProject
 
         static EvaluatedData SerchBestUnit(ServicePerUnit[] _allocated, ServicePerUnit[] _needed, ParsedData _data, float _actualK, Project project)
         {
+            EvaluatedData returnData = new EvaluatedData();
             ServicePerUnit[] actualBestAllocation = new ServicePerUnit[_data.Services.Length];
             float param = -1;
 
@@ -44,10 +45,24 @@ namespace ChallengeProject
                     }
                     if(param == -1)
                     {
-                        param = dinstance * (float)Math.Pow(region.CostPerUnit, _actualK) * region.RegionLatency[project.Country]
+                        param = dinstance * (float)Math.Pow(region.CostPerUnit, _actualK) * region.RegionLatency[Parser.ReturnCountryIndexByName(_data, project.Country)].LatencyValue;
+                    }
+                    else
+                    {
+                        if(param < dinstance * (float)Math.Pow(region.CostPerUnit, _actualK) * region.RegionLatency[Parser.ReturnCountryIndexByName(_data, project.Country)].LatencyValue)
+                        {
+                            param = dinstance * (float)Math.Pow(region.CostPerUnit, _actualK) * region.RegionLatency[Parser.ReturnCountryIndexByName(_data, project.Country)].LatencyValue;
+                        }
+                        else
+                        {
+                            actualBestAllocation = new ServicePerUnit[_data.Services.Length];
+                            returnData.ProviderName = provider.Name;
+                            returnData.RegionName = region.Name;
+                        }
                     }
                 }
             }
+            return returnData;
         }
 
     }

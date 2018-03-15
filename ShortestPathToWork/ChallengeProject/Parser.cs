@@ -150,6 +150,17 @@ namespace ChallengeProject
 
             return -1;
         }
+
+        public static int ReturnCountryIndexByName(ParsedData _parsedData, string _name)
+        {
+            for (int i = 0; i < _parsedData.Countries.Length; i++)
+            {
+                if (_parsedData.Countries[i] == _name)
+                    return i;
+            }
+
+            return -1;
+        }
     }
 
     public class ParsedData
