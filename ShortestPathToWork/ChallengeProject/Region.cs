@@ -12,6 +12,7 @@ namespace ChallengeProject
         public int UnitAvailable;
         public float CostPerUnit;
         public Unit Units;
+        public List<Latency> RegionLatency = new List<Latency>();
     }
 
     public class Unit
@@ -23,5 +24,11 @@ namespace ChallengeProject
     {
         public string Service;
         public int Quantity;
+    }
+
+    public class Latency
+    {
+        public string Country;
+        public int LatencyValue;
     }
 }

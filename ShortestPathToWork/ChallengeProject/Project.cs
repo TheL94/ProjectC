@@ -8,7 +8,7 @@ namespace ChallengeProject
 {
     public class Project
     {
-        public int Penalty;
+        public int PenaltyValue;
         public string Country;
         public List<ServicePerUnit> NeededServices = new List<ServicePerUnit>();
     }
