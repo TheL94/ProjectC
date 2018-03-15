@@ -33,24 +33,27 @@ namespace ShortestPathToWork
             return textToReturn;
         }
 
-        public static void WriteOnDisk(string[][] _output, string _path, char _separator)
+        public static void Write(string[][] _output, string _path, char _separator)
         {
             char separator = _separator;
+            StreamWriter writer;
+
             if (!File.Exists(_path))
-                File.Create(_path);
-            
-            TextWriter tw = new StreamWriter(_path);
+                writer = File.CreateText(_path);
+            else
+                writer = new StreamWriter(_path);
+
             for (int i = 0; i < _output.Length; i++)
             {
                 for (int j = 0; j < _output[i].Length; j++)
                 {
-                    tw.Write(_output[i][j]);
+                    writer.Write(_output[i][j]);
                     if (j < _output[i].Length - 1)
-                        tw.Write('\u0020');
+                        writer.Write(_separator);
                 }
-                tw.Write('\u000A');
+                writer.Write(writer.NewLine);            
             }
-            tw.Close();
+            writer.Close();
         }
     }
 }

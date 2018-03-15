@@ -8,36 +8,25 @@ namespace ShortestPathToWork
 {
     class Program
     {
+        static string EnvironmentPath { get { return Environment.GetFolderPath(Environment.SpecialFolder.Desktop); } }
+
         static void Main(string[] args)
         {
-            string path = InitApplication(Environment.SpecialFolder.Desktop);
+            Console.WriteLine("Insert File Name With Format :");
+
+            string fileName = Console.ReadLine();
+            string path = EnvironmentPath + "\\" + fileName; ;
 
             string[][] inputText = FileManager.Read(path, ' ');
 
-            // passare il parh alla classe di lettura
             InputParsed dataForPathfinder = Parser.ParseInputData(inputText);
 
-            // prendere il ritorno del reader e passarlo al parser
-            // passare il ritorno del parser al pathfidner
-            // scrivere su nuovo file il ritorno del pathfinder formattato
+            string[][] outputData = Parser.ParseOutputData();
 
-            ExitApplication();
-        }
+            FileManager.Write(outputData, EnvironmentPath + "\\" + "output.txt", ' ');
 
-        static string InitApplication(Environment.SpecialFolder _folderToLook)
-        {
-            Console.WriteLine("Insert File Name With Format :");
-            string fileName = Console.ReadLine();
-
-            string path = Environment.GetFolderPath(_folderToLook);
-            path += "\\" + fileName;
-
-            return path;
-        }
-
-        static void ExitApplication()
-        {
             Console.WriteLine("Press ESC to terminate.");
+
             ConsoleKeyInfo pressedKey = Console.ReadKey();
             if (pressedKey.Key == ConsoleKey.Escape)
                 return;
