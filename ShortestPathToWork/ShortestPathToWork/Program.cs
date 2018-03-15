@@ -15,12 +15,10 @@ namespace ShortestPathToWork
             // passare il parh alla classe di lettura
             string[][] inputText = Reader.Read(path, ' ');
 
-            for (int i = 0; i < inputText.Length; i++)
-            {
-                Console.WriteLine(inputText[i].ToString());
-            }
-            // prendere il ritorno del reader e passarlo al pathfinder
+            InputParsed dataForPathfinder = Parser.ParseInputData(inputText);
 
+            // prendere il ritorno del reader e passarlo al parser
+            // passare il ritorno del parser al pathfidner
             // scrivere su nuovo file il ritorno del pathfinder formattato
 
             ExitApplication();
